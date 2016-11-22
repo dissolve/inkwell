@@ -31,6 +31,10 @@
         }
 
         $feed_id = $db->getFeedForUrl($feed_url);
+        if(!$feed_id){
+        //TODO we check for its rel=self link and that it points to our hub
+            //if so, we create the feed in the db
+        }
 
         //store to DB 
         $subscriber_id = $db->createSubscriber($feed_id, $callback_url, $lease_seconds, $secret);
@@ -46,8 +50,19 @@
 
 
     } else { //hub.mode is an unknown value
-         header('HTTP/1.1 400 Invalid Request');
-         echo 'hub.mode was not understood, acceptable values are "subscribe" and "unsubscribe".';
+?>
+<html>
+<head>
+    <link rel="webmention" href="<?php echo $BASE_URL_PATH?>/webmention.php" />
+</head>
+<body>
+    Welcome to InkWell. 
+    Documentation forthcoming.
+    If you were trying to subscribe or unsubscribe to a feed, then you are required to include hub.mode, hub.callback, and hub.topic
+</body>
+</html>
+
+<?php
          exit();
     }
 

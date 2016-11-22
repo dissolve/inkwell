@@ -70,6 +70,30 @@ LOCK TABLES `subscribers` WRITE;
 /*!40000 ALTER TABLE `subscribers` DISABLE KEYS */;
 /*!40000 ALTER TABLE `subscribers` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `webmentions`
+--
+
+DROP TABLE IF EXISTS `webmentions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `webmentions` (
+  `webmention_id` int(11) NOT NULL AUTO_INCREMENT,
+  `source` varchar(255) NOT NULL,
+  `target` varchar(255) NOT NULL,
+  PRIMARY KEY (`subscriber_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `webmentions`
+--
+
+LOCK TABLES `webmentions` WRITE;
+/*!40000 ALTER TABLE `webmentions` DISABLE KEYS */;
+/*!40000 ALTER TABLE `webmentions` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

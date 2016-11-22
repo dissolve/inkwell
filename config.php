@@ -1,4 +1,6 @@
 <?php
+    define('BASE_URL_PATH', 'https://inklings.io/inkwell');
+
     //database connection information
     define('DB_HOSTNAME','');
     define('DB_PASSWORD','');
@@ -13,7 +15,7 @@
     // max amount of time in seconds you will allow subscriptions requests to define for their own subscription
     // negative integer or 0 will ALWAYS use DEFAULT_LEASE_LENGTH
     // otherwise, must be a positive integer
-    define('MAX_LEASE_LENGTH',60*60*24*365);
+    define('MAX_LEASE_LENGTH',60*60*24*120);
 
-    define('DATABASE_CONNECTOR', 'mysqli');
+    define('DATABASE_CONNECTOR', 'mysql');
 

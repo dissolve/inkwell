@@ -5,7 +5,7 @@ final class Database {
 
     public function __construct()
     {
-        $this->link = new DBMySQLi(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+        $this->link = new DBMySQL(DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
 
     }
 
@@ -103,11 +103,11 @@ final class Database {
     }
      */
 
-    public function getSubscribers($feed_id){
+    public function getsubscribers($feed_id){
         $result = $this->link->query(
-            " SELECT * " .
-            " FROM " . DB_DATABASE . ".subscribers " .
-            " WHERE feed_id=".(int)$feed_id.";"
+            " select * " .
+            " from " . db_database . ".subscribers " .
+            " where feed_id=".(int)$feed_id.";"
         );
         return $result->rows;
 
@@ -143,6 +143,14 @@ final class Database {
         $this->link->query(
             " UPDATE " . DB_DATABASE . ".subscribers " .
             " SET unsubscribe_requested=1 " .
+            " WHERE subscriber_id = " . (int)$subscriber_id
+        );
+    }
+
+    public function rejectUnsubscribe($subscriber_id){
+        $this->link->query(
+            " UPDATE " . DB_DATABASE . ".subscribers " .
+            " SET unsubscribe_requested=0 " .
             " WHERE subscriber_id = " . (int)$subscriber_id
         );
     }
@@ -210,6 +218,24 @@ final class Database {
 
         return $feed_result->rows;
 
+
+    }
+
+    public function storeWebmention($source,$target){
+        $this->link->query(
+            " INSERT INTO " . DB_DATABASE . ".webmentions " .
+            " SET source='" .$this->link->escape($source). "'" .
+            " , target='" .$this->link->escape($target). "'" 
+        );
+        return $this->link->getLastId();
+    }
+
+    public function getWebmentions(){
+        $result = $this->link->query(
+            " SELECT * " .
+            " FROM " . db_database . ".webmentions "
+        );
+        return $result->rows;
 
     }
 
